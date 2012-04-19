@@ -37,6 +37,8 @@ function efProtectedNoticeHook( &$article, &$outputDone, &$pcache ) {
 	// get the restriction types
 	$restrictionTypes = $title->getRestrictionTypes();
 
+	$shownheader = false;
+
 	// cycle through each type
 	foreach ( $restrictionTypes as $type ) {
 		// get the restrictions for that type
@@ -47,9 +49,16 @@ function efProtectedNoticeHook( &$article, &$outputDone, &$pcache ) {
 			// if the level is in the list of restrictions
 			// for that type, and it's not blank
 			if ( in_array( $level, $r ) && $level != '' ) {
-				$wgOut->addWikiText("protected:  $type @ $level <br />");
+				if( $shownheader === false ) {
+					$shownheader = "";
+				}
+				$shownheader .= wfMessage("protectednotice-restriction", wfMessage('protectednotice-type-'.$type), wfMessage('protectednotice-level-'.$level) );
 			}
 		}
+	}
+
+	if( $shownheader ) {
+		$wgOut->addWikiMsg('protectednotice-notice', $shownheader);
 	}
 
 	// behave nicely and let other hooks run

@@ -20,6 +20,9 @@ $wgHooks['GitViewers'][] = "efGithubViewerHook";
 
 function efGithubViewerHook( &$viewers ) {
 	$viewers["git@github.com:(.*).git"]="https://github.com/$1/tree/%H";
+	$viewers["git://github.com/(.*).git"]="https://github.com/$1/tree/%H";
+	$viewers["https://(.*)@github.com/(.*).git"]="https://github.com/$2/tree/%H";
+	$viewers["https://github.com/(.*).git"]="https://github.com/$1/tree/%H";
 	return true;
 }
 

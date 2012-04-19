@@ -16,10 +16,10 @@ $wgExtensionMessagesFiles['ProtectedNotice'] = "$directory/ProtectedNotice.i18n.
 
 // hooks
 
-$wgHooks['GitViewers'] = "efGithubViewerHook";
+$wgHooks['GitViewers'][] = "efGithubViewerHook";
 
 function efGithubViewerHook( &$viewers ) {
-	$viewers["git@github.com/(.*).git"]="https://github.com/$1/tree/%H";
+	$viewers["git@github.com:(.*).git"]="https://github.com/$1/tree/%H";
 	return true;
 }
 
